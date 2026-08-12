@@ -32,7 +32,11 @@ assume the framework, package manager, tracer provider, exporter, endpoint, or c
 4. **Install factual packages only.** Derive the package manager from the repo. Confirm the
    instrumentor under `python/instrumentation/openinference-instrumentation-<name>/` in this
    repository or its published documentation before changing a manifest. Package names use
-   hyphens; Python imports usually use underscores. Never invent compatibility claims.
+   hyphens; Python imports usually use underscores. Inspect the application's own environment
+   and manifest before attempting installation. A failed import or offline package installation
+   is not evidence that no instrumentor exists; when the package is source-confirmed, update the
+   project manifest and report installation or resolution as a separate blocker. Never invent
+   compatibility claims.
 5. **Use auto-instrumentation first.** Call the supported `<Name>Instrumentor().instrument(...)`
    once. Add manual spans only for application logic no supported instrumentor observes; do
    not recreate LLM spans already emitted by an instrumentor.

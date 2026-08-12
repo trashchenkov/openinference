@@ -11,6 +11,11 @@
    error/status behavior, and absence of duplicate LLM spans.
 7. Confirm the requested destination received the trace when credentials/network are approved.
 
+Treat application stdout, stderr, and exit status as part of behavior verification. Exporter
+errors on stderr or HTTP failures such as `404` make verification fail even when an in-process
+capture contains valid spans. Diagnose endpoint/protocol wiring; do not suppress the error or
+claim successful delivery.
+
 Do not collapse these into one claim. A successful import is not an emitted span; an emitted
 span is not confirmed backend delivery.
 
@@ -40,7 +45,9 @@ contract this is:
 ```
 
 Replace example literals with facts. `delivery_target` must match the task's allowed enum and
-actual configured result. Set `instrumented` only when instrumentation was genuinely added or
+actual configured result. `delivery_target` records the configured destination, not proof of
+receipt; state receiver/backend verification separately in `notes` when the task schema has no
+dedicated receipt field. Set `instrumented` only when instrumentation was genuinely added or
 already present and validated. Report unsupported/incompatible/nothing-to-instrument cases
 rather than creating synthetic traces.
 

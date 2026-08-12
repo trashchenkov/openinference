@@ -23,6 +23,11 @@ example in Python: `os.getenv("NAME") is not None`. Do not dump the process envi
 5. If no supported instrumentor exists, say so. Consider manual spans only for a real,
    documented application boundary; do not invent an instrumentor package.
 
+Use repository source or published documentation to decide whether an instrumentor exists.
+A failed import or offline package installation is not evidence that no instrumentor exists.
+Check the application's selected interpreter or virtual environment separately from package
+existence, and distinguish an unavailable package resolver from an unsupported call path.
+
 Examples of distinct layers include a framework wrapping a provider SDK. Instrumenting both
 can emit duplicate nested LLM spans. Start with the highest applicable layer and inspect the
 result before adding another.

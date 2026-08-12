@@ -18,8 +18,13 @@ framework objects it patches. Pass `tracer_provider=` when the instrumentor API 
 
 Use the requested OTLP protocol and the official exporter for that protocol. Read endpoint
 configuration from documented `OTEL_EXPORTER_OTLP_*` variables or existing app config; do not
-hard-code a receiver. Keep endpoint path semantics exact: some exporters append signal paths,
-while examples may specify `/v1/traces` explicitly.
+hard-code a receiver. For OTLP/HTTP traces, prefer the signal-specific
+`OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` when it is present. If only the generic
+`OTEL_EXPORTER_OTLP_ENDPOINT` base URL is present and the exporter constructor expects a complete
+trace URL, append `/v1/traces` exactly once. Do not pass a generic base endpoint directly as the
+exporter `endpoint=` unless the exact exporter API is documented to append the signal path.
+Conversely, do not append another signal path to a signal-specific endpoint. Keep protocol and
+path semantics exact rather than inferring them from variable names alone.
 
 An exporter configuration is not proof of receipt. Flush short-lived programs when the SDK
 requires it and verify at the receiver.
