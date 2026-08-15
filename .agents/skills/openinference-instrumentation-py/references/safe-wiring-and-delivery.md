@@ -35,11 +35,12 @@ When the task says to preserve an existing pipeline, do not introduce a new back
 its endpoint. Instrument against the current provider and verify that the existing exporter
 still receives spans.
 
-## Arize AX
+## Vendor-specific destinations
 
-Route destination-specific setup to `arize-instrumentation`. Do not infer region, endpoint,
-project, API key, or Space ID. Never display credential values. A generic OTLP endpoint may
-belong to a non-Arize pipeline and must not be silently repurposed.
+Keep neutral OTLP wiring unless the user explicitly requests Phoenix or Arize AX, or the
+target application's own configuration conclusively identifies that receiver. For those two
+destinations, follow [vendor destination routing](vendor-destinations.md). A generic OTLP
+endpoint is not enough evidence to infer either vendor and must not be silently repurposed.
 
 ## Privacy
 

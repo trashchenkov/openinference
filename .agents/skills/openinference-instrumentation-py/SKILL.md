@@ -6,7 +6,6 @@ description: >
   OpenInference/OpenTelemetry; select the supported instrumentor, preserve existing
   telemetry, configure the requested delivery path, avoid duplicate spans, and verify
   the result without exposing credentials.
-invocable: true
 ---
 
 # OpenInference Instrumentation for Python
@@ -66,7 +65,8 @@ assume the framework, package manager, tracer provider, exporter, endpoint, or c
 
 ## Vendor boundary
 
-This skill is destination-neutral. For an Arize AX-specific request, use the
-`arize-instrumentation` workflow for region, credentials, project, and backend verification;
-retain this skill's framework selection, existing-provider preservation, duplicate-span, and
-secret-safety rules.
+This skill owns portable OpenInference instrumentation and remains destination-neutral. When
+the user explicitly selects Phoenix or Arize AX, retain every framework-selection,
+existing-provider, duplicate-span, privacy, and evidence rule above, then follow
+[vendor destination routing](references/vendor-destinations.md) for the destination-specific
+setup and verification boundary. Do not infer a vendor from an ambiguous OTLP endpoint.
